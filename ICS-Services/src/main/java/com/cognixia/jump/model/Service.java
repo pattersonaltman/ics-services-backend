@@ -31,8 +31,6 @@ public class Service implements Serializable {
 	}
 	
 	
-	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long serv_id;
@@ -47,9 +45,6 @@ public class Service implements Serializable {
 	@Column(nullable = false, columnDefinition = "DECIMAL(10,2)")
 	private double price;
 
-	
-	
-	
 	
 	public Service() {
 		

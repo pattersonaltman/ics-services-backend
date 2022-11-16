@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
 public class Service implements Serializable {
 
@@ -42,6 +44,7 @@ public class Service implements Serializable {
 	private Long serv_id;
 	
 	@Column(nullable = false)
+	@Schema(description = "Model for service information", example = "Netflix", required = true)
 	private String name;
 	
 	@Column(nullable = false)

@@ -18,7 +18,7 @@ import com.cognixia.jump.model.Service;
 import com.cognixia.jump.repository.ServiceRepository;
 
 @RestController
-@RequestMapping("/api/service")
+@RequestMapping("/api/services")
 public class ServiceController {
 
 	

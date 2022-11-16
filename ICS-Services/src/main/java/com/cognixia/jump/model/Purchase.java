@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -15,26 +17,24 @@ public class Purchase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
-
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	@Column(name = "purchase_id")
-	Long purchase_id;
+	@Column(name = "pur_id")
+	Long id;
 	
-	@JsonIgnoreProperties
-	Service service;
-	
-	@JsonIgnoreProperties
+	@JsonIgnoreProperties("purchases")
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	User user;
 	
-//	@JsonIgnoreProperties
-//	Order order;
+	@JsonIgnoreProperties("purchases")
+	@ManyToOne
+	@JoinColumn(name = "serv_id")
+	Service service;
 	
-	
-	
-	
-	
+	@JsonIgnoreProperties("purchases")
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	OrderItem orderItem;
 	
 }

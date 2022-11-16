@@ -13,13 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Entity
 public class Service implements Serializable {
 
-	
-	
 	private static final long serialVersionUID = 1L;
-
-	
-	
-	
 	
 	public static enum Type {
 		

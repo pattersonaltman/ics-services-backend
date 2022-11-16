@@ -8,10 +8,6 @@ import com.cognixia.jump.model.Service;
 @Repository
 public interface ServiceRepository extends JpaRepository<Service, Long> {
 
-	
-	
-	
-	
-	
+
 	
 }

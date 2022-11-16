@@ -72,15 +72,15 @@ public class User implements Serializable {
 	@Column(columnDefinition = "boolean default true")
 	private boolean enabled;
 	
-	//One To Many with Purchases
-	@JsonIgnoreProperties("user")
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private Set<Purchase> purchases = new HashSet<>();
-	
-	//One To Many with Purchases
+	//One To Many with OrderItems
 //	@JsonIgnoreProperties("user")
 //	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 //	private Set<OrderItem> orderItems = new HashSet<>();
+	
+	//One To Many with OrderItems
+	@JsonIgnoreProperties("user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<OrderItem> orderItems = new HashSet<>();
 	
 	public User() {
 		this.id = 1L;
@@ -93,12 +93,12 @@ public class User implements Serializable {
 		this.dob = new Date();
 		this.role = null;
 		this.enabled = false;
-		this.purchases = null;
+		this.orderItems = null;
 	}
 	
 	public User(Long id, @Size(min = 1, max = 100) String username, String password, String firstName, String lastName,
 			@Email(message = "Not a valid email format.") String email, String phone, @Valid Date dob, Role role,
-			boolean enabled, Set<Purchase> purchases) {
+			boolean enabled, Set<OrderItem> orderItems) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -110,7 +110,7 @@ public class User implements Serializable {
 		this.dob = dob;
 		this.role = role;
 		this.enabled = enabled;
-		this.purchases = purchases;
+		this.orderItems = orderItems;
 	}
 
 	public Long getId() {
@@ -149,12 +149,12 @@ public class User implements Serializable {
 		this.dob = dob;
 	}
 
-	public Set<Purchase> getPurchases() {
-		return purchases;
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
 	}
 
-	public void setPurchases(Set<Purchase> purchases) {
-		this.purchases = purchases;
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
 	public void setId(Long id) {
@@ -205,7 +205,7 @@ public class User implements Serializable {
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", email=" + email + ", phone=" + phone + ", dob=" + dob + ", role=" + role
-				+ ", enabled=" + enabled + ", purchases=" + purchases + "]";
+				+ ", enabled=" + enabled + ", orderItems=" + orderItems + "]";
 	}
 
 }

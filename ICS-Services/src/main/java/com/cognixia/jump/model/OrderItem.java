@@ -21,9 +21,6 @@ public class OrderItem implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	
-	
-	
 	//fields
 	
 	@Id
@@ -47,7 +44,7 @@ public class OrderItem implements Serializable{
 	
 	
 	//One To Many with Purchases
-	@JsonIgnoreProperties("orderItem")
+	@JsonIgnoreProperties({"orderItem","user"})
 	@OneToMany(mappedBy = "orderItem", fetch = FetchType.EAGER)
 	private Set<Purchase> purchases = new HashSet<>();
 	

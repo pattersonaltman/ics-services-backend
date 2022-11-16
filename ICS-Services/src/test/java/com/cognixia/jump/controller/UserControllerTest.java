@@ -65,9 +65,9 @@ class UserControllerTest {
 		List<User> users = new ArrayList<User>();
 		
 		users.add( new User(1L, "user1", "pass", "user", "name", "user@name.com",
-				"1234567890", new Date(), Role.ROLE_USER, true));
+				"1234567890", new Date(), Role.ROLE_USER, true, null));
 		users.add( new User(2L, "user2", "pass", "user2", "name", "user2@name.com",
-				"1234567891", new Date(), Role.ROLE_USER, true));
+				"1234567891", new Date(), Role.ROLE_USER, true, null));
 		
 		when( repo.findAll() ).thenReturn( users );
 		
@@ -98,3 +98,4 @@ class UserControllerTest {
 //	}
 
 }
+

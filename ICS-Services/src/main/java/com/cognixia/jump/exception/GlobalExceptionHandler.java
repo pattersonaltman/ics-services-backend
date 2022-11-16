@@ -66,4 +66,24 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(400).body(errorDetails);
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@ExceptionHandler(ResourceAlreadyExistsException.class)
+	public ResponseEntity<?> resourceNotFound(ResourceAlreadyExistsException ex, WebRequest request) {
+		
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+		
+		return ResponseEntity.status(400).body(errorDetails);
+	}
+	
 }

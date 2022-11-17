@@ -65,11 +65,14 @@ public class SecurityConfiguration {
 		
 		http.csrf().disable()
 			.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/api/user").permitAll()
-			.antMatchers(HttpMethod.PUT, "/api/user/update").access("hasRole('ADMIN')")
-			.antMatchers(HttpMethod.GET, "/api/user").access("hasRole('ADMIN')")
-			.antMatchers(HttpMethod.DELETE, "/api/user/delete").access("hasRole('ADMIN')")
-			.antMatchers(HttpMethod.POST, "/api/services").access("hasRole('ADMIN')")
+			.antMatchers(HttpMethod.POST, "/api/user").permitAll() //create
+			.antMatchers(HttpMethod.GET, "/api/services").permitAll()
+			.antMatchers(HttpMethod.GET, "/api/services/id").permitAll()
+			.antMatchers(HttpMethod.PUT, "/api/user/update").access("hasRole('ADMIN')") //update
+			.antMatchers(HttpMethod.GET, "/api/user").access("hasRole('ADMIN')") //all users
+			.antMatchers(HttpMethod.GET, "/api/user/id").access("hasRole('ADMIN')") //by id
+			.antMatchers(HttpMethod.DELETE, "/api/user/delete").access("hasRole('ADMIN')") //delete
+			.antMatchers(HttpMethod.POST, "/api/services").access("hasRole('ADMIN')") // add service
 			/**/
 			.antMatchers(HttpMethod.PUT, "/api/game").access("hasRole('ADMIN')")
 			.antMatchers(HttpMethod.DELETE, "/api/game").access("hasRole('ADMIN')")

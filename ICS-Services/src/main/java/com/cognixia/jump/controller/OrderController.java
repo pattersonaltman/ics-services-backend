@@ -21,26 +21,14 @@ import com.cognixia.jump.repository.OrderRepository;
 @RequestMapping("api/orders")
 public class OrderController {
 
-	
-	
-	
 	@Autowired
 	OrderRepository repo;
-	
-	
-	
-	
-	
-	
 	
 	//Get all orders
 	@GetMapping()
 	List<OrderItem> getAllOrders() {
 		return repo.findAll();
-	}
-	
-	
-	
+	}	
 	
 	//Get order by id
 	@GetMapping("/id")
@@ -56,9 +44,6 @@ public class OrderController {
 		throw new ResourceAlreadyExistsException("Order", order_id);
 	}
 	
-	
-	
-	
 	//Create an order
 	@PostMapping()
 	public ResponseEntity<?> createOrder() {
@@ -70,17 +55,13 @@ public class OrderController {
 	
 	//Update an order
 //	@PutMapping()
-	
-<<<<<<< HEAD
-=======
-		Optional<OrderItem> found = repo.findById(order_id);
-		
-		return null;	// finish
-		
-		
-	}
-	
-	
+//	
+//		Optional<OrderItem> found = repo.findById(order_id);
+//		
+//		return null;	// finish
+//		
+//		
+//	}
 	
 	
 	//Delete an Order
@@ -100,10 +81,7 @@ public class OrderController {
 //		
 //		throw new ResourceNotFoundException("Order", order_id);
 //	}
->>>>>>> 7136012 (	modified:   ICS-Services/src/main/java/com/cognixia/jump/controller/OrderController.java)
-	
-	
-	
+
 	
 }
 

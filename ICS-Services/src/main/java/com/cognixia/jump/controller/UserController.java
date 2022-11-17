@@ -51,6 +51,19 @@ public class UserController {
 			   		+ "The user object will also contain a unique ID as well as "
 			   		+ "an enabled value set to true by default.")
 	
+	@GetMapping("/id")
+	public ResponseEntity<?> getUserById(@RequestParam Long user_id) throws ResourceNotFoundException {
+		
+		Optional<User> found = repo.findById(user_id);
+		
+		if(found.isPresent())
+		{
+			return ResponseEntity.status(200).body(found);
+		}
+		
+		throw new ResourceNotFoundException("User", user_id);
+	}
+	
 	@PostMapping()
 	public ResponseEntity<?> createUser(@RequestBody User user) {
 		

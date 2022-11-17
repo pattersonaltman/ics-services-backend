@@ -70,15 +70,13 @@ public class OrderController {
 	
 	//Update an order
 //	@PutMapping()
-	
-<<<<<<< HEAD
-=======
-		Optional<OrderItem> found = repo.findById(order_id);
-		
-		return null;	// finish
-		
-		
-	}
+//	
+//		Optional<OrderItem> found = repo.findById(order_id);
+//		
+//		return null;	// finish
+//		
+//		
+//	}
 	
 	
 	
@@ -100,7 +98,6 @@ public class OrderController {
 //		
 //		throw new ResourceNotFoundException("Order", order_id);
 //	}
->>>>>>> 7136012 (	modified:   ICS-Services/src/main/java/com/cognixia/jump/controller/OrderController.java)
 	
 	
 	

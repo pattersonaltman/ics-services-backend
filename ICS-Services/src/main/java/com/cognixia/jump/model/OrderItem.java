@@ -52,10 +52,7 @@ public class OrderItem implements Serializable{
 	public OrderItem() {
 		
 	}
-
-
-
-
+	
 
 	public OrderItem(Long order_id, User user, int qty, double discount, double total) {
 		super();

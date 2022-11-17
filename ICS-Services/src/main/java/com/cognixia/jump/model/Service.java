@@ -16,18 +16,7 @@ public class Service implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static enum Type {
-		
-		INTERNET1("This is internet 1"), INTERNET2("This is internet 2"), INTERNET3("This is internet 3"), 
-		CABLE1("This is cable 1"), CABLE2("This is cable 2"), CABLE3("This is cable 3"),
-		NETFLIX("This is Netflix"), HULU("This is Hulu"), HBO("This is HBO");
-		
-		private String descrip;
-		
-		private Type() {}
-		
-		private Type(String descrip) {
-			this.descrip = descrip;
-		}
+		CABLE, INTERNET, STREAMING;
 	}
 	
 	
@@ -42,6 +31,11 @@ public class Service implements Serializable {
 	@Column(nullable = false)
 	private Type type;
 	
+	@Column(nullable = false)
+	private String description;
+	
+
+
 	@Column(nullable = false, columnDefinition = "DECIMAL(10,2)")
 	private double price;
 
@@ -89,7 +83,16 @@ public class Service implements Serializable {
 		this.type = type;
 	}
 
+	public String getDescription() {
+		return description;
+	}
 
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 	public double getPrice() {
 		return price;
 	}
@@ -102,11 +105,12 @@ public class Service implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Service [serv_id=" + serv_id + ", name=" + name + ", type=" + type + ", price=" + price + "]";
+		return "Service [serv_id=" + serv_id + ", name=" + name + ", type=" + type + ", description=" + description
+				+ ", price=" + price + "]";
 	}
 	
 	
-	
+
 	
 	
 	

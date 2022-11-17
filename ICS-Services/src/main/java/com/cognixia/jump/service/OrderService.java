@@ -30,10 +30,8 @@ public class OrderService {
 	
 	//Create an order
 	//No mapping needed [?]
-	public ResponseEntity<?> createOrder() throws ResourceNotFoundException {
+	public ResponseEntity<?> createOrder(String username) throws ResourceNotFoundException {
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
 		Optional<User> opt = userRepo.findByUsername(username);
 		
 		if(opt.isPresent())

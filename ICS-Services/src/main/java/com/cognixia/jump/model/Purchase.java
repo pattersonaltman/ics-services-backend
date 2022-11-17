@@ -37,42 +37,69 @@ public class Purchase implements Serializable {
 	@JoinColumn(name = "order_id")
 	OrderItem orderItem;
 
+
+	public Purchase() {
+		
+	}
+
+
+
+	public Purchase(Long id, User user, Service service, OrderItem orderItem) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.service = service;
+		this.orderItem = orderItem;
+	}
+
+
+
+
 	public Long getId() {
 		return id;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+
 	public User getUser() {
 		return user;
 	}
+
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+
 	public Service getService() {
 		return service;
 	}
+
 
 	public void setService(Service service) {
 		this.service = service;
 	}
 
+
 	public OrderItem getOrderItem() {
 		return orderItem;
 	}
 
+
 	public void setOrderItem(OrderItem orderItem) {
 		this.orderItem = orderItem;
 	}
+
 
 	@Override
 	public String toString() {
 		return "Purchase [id=" + id + ", user=" + user + ", service=" + service + ", orderItem=" + orderItem + "]";
 	}
 	
+
 	
 }

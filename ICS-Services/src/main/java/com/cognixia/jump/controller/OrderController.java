@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.exception.ResourceAlreadyExistsException;
+import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.OrderItem;
 import com.cognixia.jump.repository.OrderRepository;
 
@@ -65,22 +67,22 @@ public class OrderController {
 	
 	
 	//Delete an Order
-//	@DeleteMapping("/delete")
-//	public ResponseEntity<?> deleteOrderById(@RequestParam Long order_id) throws ResourceNotFoundException {
-//		
-//		Optional<OrderItem> opt = repo.findById(order_id);
-//		
-//		if(opt.isPresent())
-//		{
-//			OrderItem deleted = opt.get();
-//			
-//			repo.deleteById(order_id);
-//			
-//			return ResponseEntity.status(200).body(deleted);
-//		}
-//		
-//		throw new ResourceNotFoundException("Order", order_id);
-//	}
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteOrderById(@RequestParam Long order_id) throws ResourceNotFoundException {
+		
+		Optional<OrderItem> opt = repo.findById(order_id);
+		
+		if(opt.isPresent())
+		{
+			OrderItem deleted = opt.get();
+			
+			repo.deleteById(order_id);
+			
+			return ResponseEntity.status(200).body(deleted);
+		}
+		
+		throw new ResourceNotFoundException("Order", order_id);
+	}
 
 	
 }

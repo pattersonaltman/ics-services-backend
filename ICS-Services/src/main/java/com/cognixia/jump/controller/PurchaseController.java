@@ -34,7 +34,7 @@ public class PurchaseController {
 	
 	//Get order by id
 	@GetMapping("/id")
-	public ResponseEntity<?> getOrderById(@RequestParam(name = "pur_id") Long pur_id) throws ResourceNotFoundException {
+	public ResponseEntity<?> getPurchaseById(@RequestParam(name = "pur_id") Long pur_id) throws ResourceNotFoundException {
 		
 		Optional<Purchase> found = repo.findById(pur_id);
 		

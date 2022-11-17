@@ -66,21 +66,23 @@ public class SecurityConfiguration {
 		http.csrf().disable()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/api/user").permitAll() //create
-			.antMatchers(HttpMethod.GET, "/api/services").permitAll()
-			.antMatchers(HttpMethod.GET, "/api/services/id").permitAll()
+			.antMatchers(HttpMethod.GET, "/api/services").permitAll() //view all services
+			.antMatchers(HttpMethod.GET, "/api/services/id").permitAll() //view by id (postman)
 			.antMatchers(HttpMethod.PUT, "/api/user/update").access("hasRole('ADMIN')") //update
 			.antMatchers(HttpMethod.GET, "/api/user").access("hasRole('ADMIN')") //all users
 			.antMatchers(HttpMethod.GET, "/api/user/id").access("hasRole('ADMIN')") //by id
 			.antMatchers(HttpMethod.DELETE, "/api/user/delete").access("hasRole('ADMIN')") //delete
-			.antMatchers(HttpMethod.POST, "/api/services").access("hasRole('ADMIN')") // add service
-			/**/
-			.antMatchers(HttpMethod.PUT, "/api/game").access("hasRole('ADMIN')")
-			.antMatchers(HttpMethod.DELETE, "/api/game").access("hasRole('ADMIN')")
-			.antMatchers(HttpMethod.GET, "/api/purchase").access("hasRole('ADMIN')")
-			.antMatchers(HttpMethod.GET, "/api/purchase/game").access("hasRole('ADMIN')")
+			.antMatchers(HttpMethod.POST, "/api/services").access("hasRole('ADMIN')") //add service
+			.antMatchers(HttpMethod.PUT, "/api/services/update").access("hasRole('ADMIN')") //update service
+			.antMatchers(HttpMethod.DELETE, "/api/services/delete").access("hasRole('ADMIN')") //delete service
+			.antMatchers(HttpMethod.GET, "/api/purchases").access("hasRole('ADMIN')")
+			.antMatchers(HttpMethod.GET, "/api/purchases/service").access("hasRole('ADMIN')")
+			/*Consider "LOG IN AS ADMIN" button - would require more pages so may not be feasible*/
 			.antMatchers("/authenticate").permitAll() // anyone can create a JWT w/o needing to have a JWT first
 			.antMatchers(AUTH_WHITELIST).permitAll()
-			.anyRequest().authenticated() // all APIs, you have to have a user account
+			/* Post to create a purchase/order handled by below code. Have to be logged in but don't have to be admin
+			  Same is true for update/delete a purchase/order. JWT should tell us which user data we are changing */
+			.anyRequest().authenticated() //all APIs, you have to have a user account
 			.and()
 			.sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS );
 			 // tell spring security to NOT create sessions

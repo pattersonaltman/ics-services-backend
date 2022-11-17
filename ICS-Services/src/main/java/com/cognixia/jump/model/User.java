@@ -91,7 +91,7 @@ public class User implements Serializable {
 		this.email = "N/A";
 		this.phone = "N/A";
 		this.dob = new Date();
-		this.role = null;
+		this.role = Role.ROLE_USER;
 		this.enabled = false;
 		this.orderItems = null;
 	}

@@ -68,7 +68,9 @@ public class SecurityConfiguration {
 			.antMatchers(HttpMethod.POST, "/api/user").permitAll()
 			.antMatchers(HttpMethod.PUT, "/api/user/update").access("hasRole('ADMIN')")
 			.antMatchers(HttpMethod.GET, "/api/user").access("hasRole('ADMIN')")
-			.antMatchers(HttpMethod.POST, "/api/game").access("hasRole('ADMIN')")
+			.antMatchers(HttpMethod.DELETE, "/api/user/delete").access("hasRole('ADMIN')")
+			.antMatchers(HttpMethod.POST, "/api/services").access("hasRole('ADMIN')")
+			/**/
 			.antMatchers(HttpMethod.PUT, "/api/game").access("hasRole('ADMIN')")
 			.antMatchers(HttpMethod.DELETE, "/api/game").access("hasRole('ADMIN')")
 			.antMatchers(HttpMethod.GET, "/api/purchase").access("hasRole('ADMIN')")

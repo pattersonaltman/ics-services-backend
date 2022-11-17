@@ -37,7 +37,8 @@ public class PurchaseService {
 		String username = ((UserDetails)principal).getUsername();
 		Optional<User> user = userRepo.findByUsername(username);
 		if (user.isPresent()) {
-			Optional<OrderItem> orderItem = orderRepo.findByUser(user);
+			User currUser = user.get();
+			Optional<OrderItem> orderItem = orderRepo.findByUser(currUser);
 			if (!orderItem.isPresent()) {
 				orderService.createOrder(username);
 				Optional<OrderItem> orderItem = orderRepo.findById(user.get().getId());

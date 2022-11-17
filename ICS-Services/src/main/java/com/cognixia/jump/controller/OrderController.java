@@ -71,6 +71,36 @@ public class OrderController {
 	//Update an order
 //	@PutMapping()
 	
+<<<<<<< HEAD
+=======
+		Optional<OrderItem> found = repo.findById(order_id);
+		
+		return null;	// finish
+		
+		
+	}
+	
+	
+	
+	
+	//Delete an Order
+//	@DeleteMapping("/delete")
+//	public ResponseEntity<?> deleteOrderById(@RequestParam Long order_id) throws ResourceNotFoundException {
+//		
+//		Optional<OrderItem> opt = repo.findById(order_id);
+//		
+//		if(opt.isPresent())
+//		{
+//			OrderItem deleted = opt.get();
+//			
+//			repo.deleteById(order_id);
+//			
+//			return ResponseEntity.status(200).body(deleted);
+//		}
+//		
+//		throw new ResourceNotFoundException("Order", order_id);
+//	}
+>>>>>>> 7136012 (	modified:   ICS-Services/src/main/java/com/cognixia/jump/controller/OrderController.java)
 	
 	
 	

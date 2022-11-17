@@ -18,6 +18,7 @@ import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Purchase;
 import com.cognixia.jump.repository.PurchaseRepository;
+import com.cognixia.jump.service.PurchaseService;
 
 @RestController
 @RequestMapping("api/purchases")
@@ -25,6 +26,9 @@ public class PurchaseController {
 
 	@Autowired
 	PurchaseRepository repo;
+	
+	@Autowired
+	PurchaseService service;
 	
 	//Get all orders
 	@GetMapping()
@@ -46,15 +50,15 @@ public class PurchaseController {
 		throw new ResourceNotFoundException("Purchase", pur_id);
 	}
 	
-	//Create an order
-//	@PostMapping()
-//	public ResponseEntity<?> createOrder() {
-//		
-//		Purchase completed = service.purchaseGameIdAndQty(game_id, 1);
-//		
-//		return ResponseEntity.status(201).body(completed);
-//		
-//	}
+	//Create purchase
+	@PostMapping()
+	public ResponseEntity<?> createPurchase(@RequestParam(name="serv_id") Long serv_id) {
+		
+		Purchase completed = service.createPurchase(serv_id);
+		
+		return ResponseEntity.status(201).body(completed);
+		
+	}
 	
 	
 	//Update an order

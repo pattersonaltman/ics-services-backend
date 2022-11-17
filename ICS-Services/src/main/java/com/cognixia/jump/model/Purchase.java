@@ -37,8 +37,7 @@ public class Purchase implements Serializable {
 	@JoinColumn(name = "order_id")
 	OrderItem orderItem;
 
-	
-	
+
 	public Purchase() {
 		
 	}
@@ -55,10 +54,10 @@ public class Purchase implements Serializable {
 
 
 
+
 	public Long getId() {
 		return id;
 	}
-
 
 
 	public void setId(Long id) {
@@ -66,11 +65,9 @@ public class Purchase implements Serializable {
 	}
 
 
-
 	public User getUser() {
 		return user;
 	}
-
 
 
 	public void setUser(User user) {
@@ -78,11 +75,9 @@ public class Purchase implements Serializable {
 	}
 
 
-
 	public Service getService() {
 		return service;
 	}
-
 
 
 	public void setService(Service service) {
@@ -90,11 +85,9 @@ public class Purchase implements Serializable {
 	}
 
 
-
 	public OrderItem getOrderItem() {
 		return orderItem;
 	}
-
 
 
 	public void setOrderItem(OrderItem orderItem) {
@@ -102,14 +95,11 @@ public class Purchase implements Serializable {
 	}
 
 
-
 	@Override
 	public String toString() {
 		return "Purchase [id=" + id + ", user=" + user + ", service=" + service + ", orderItem=" + orderItem + "]";
 	}
 	
-	
-	
-	
+
 	
 }

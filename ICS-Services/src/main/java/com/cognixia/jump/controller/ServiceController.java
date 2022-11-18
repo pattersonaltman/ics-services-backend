@@ -1,5 +1,6 @@
 package com.cognixia.jump.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,17 +56,17 @@ public class ServiceController {
 	
 	
 	@PostMapping()
-	public ResponseEntity<?> createService(@RequestBody Services service) throws ResourceAlreadyExistsException {
-		
-		if(repo.existsById(service.getServ_id()))
-		{
-			throw new ResourceAlreadyExistsException("Service", service.getServ_id());
+	public ResponseEntity<?> createService(@RequestBody List<Services> services) throws ResourceAlreadyExistsException {
+		List<Services> created = new ArrayList<>();
+		for (int i=0; i < services.size() ;i++) {
+			if(repo.existsById(services.get(i).getServ_id())) {
+				throw new ResourceAlreadyExistsException("Service", services.get(i).getServ_id());
+			}
+			
+			services.get(i).setServ_id(null);
+			
+			created.add(repo.save(services.get(i)));
 		}
-		
-		service.setServ_id(null);
-		
-		Services created = repo.save(service);
-		
 		return ResponseEntity.status(201).body(created);
 	}
 	

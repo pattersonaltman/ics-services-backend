@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
-public class Service implements Serializable {
+public class Services implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -40,12 +40,12 @@ public class Service implements Serializable {
 	private double price;
 
 	
-	public Service() {
+	public Services() {
 		
 	}
 	
 	
-	public Service(Long serv_id, String name, Type type, double price) {
+	public Services(Long serv_id, String name, Type type, double price) {
 		super();
 		this.serv_id = serv_id;
 		this.name = name;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
-import com.cognixia.jump.model.Service;
+import com.cognixia.jump.model.Services;
 import com.cognixia.jump.repository.ServiceRepository;
 
 @RestController
@@ -33,7 +33,7 @@ public class ServiceController {
 	
 	//Get all services
 	@GetMapping()
-	public List<Service> getAllServices() {
+	public List<Services> getAllServices() {
 		return repo.findAll();
 	}
 	
@@ -42,7 +42,7 @@ public class ServiceController {
 	@GetMapping("/id")
 	public ResponseEntity<?> getServiceById(@RequestParam(name = "serv_id") Long serv_id) throws ResourceNotFoundException{
 		
-		Optional<Service> found = repo.findById(serv_id);
+		Optional<Services> found = repo.findById(serv_id);
 		
 		if(found.isPresent())
 		{
@@ -55,7 +55,7 @@ public class ServiceController {
 	
 	
 	@PostMapping()
-	public ResponseEntity<?> createService(@RequestBody Service service) throws ResourceAlreadyExistsException {
+	public ResponseEntity<?> createService(@RequestBody Services service) throws ResourceAlreadyExistsException {
 		
 		if(repo.existsById(service.getServ_id()))
 		{
@@ -64,7 +64,7 @@ public class ServiceController {
 		
 		service.setServ_id(null);
 		
-		Service created = repo.save(service);
+		Services created = repo.save(service);
 		
 		return ResponseEntity.status(201).body(created);
 	}
@@ -73,11 +73,11 @@ public class ServiceController {
 	
 	
 	@PutMapping("/update")
-	public ResponseEntity<?> updateServiceById(@RequestBody Service service) throws ResourceNotFoundException {
+	public ResponseEntity<?> updateServiceById(@RequestBody Services service) throws ResourceNotFoundException {
 		
 		if(repo.existsById(service.getServ_id()))
 		{
-			Service updated = repo.save(service);
+			Services updated = repo.save(service);
 			return ResponseEntity.status(200).body(updated);
 		}
 		
@@ -88,7 +88,7 @@ public class ServiceController {
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteServiceById(@RequestParam Long serv_id) throws ResourceNotFoundException {
 		
-		Optional<Service> deleted = repo.findById(serv_id);
+		Optional<Services> deleted = repo.findById(serv_id);
 		
 		if(deleted.isPresent())
 		{

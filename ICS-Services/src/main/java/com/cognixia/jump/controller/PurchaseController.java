@@ -52,7 +52,7 @@ public class PurchaseController {
 	
 	//Create purchase
 	@PostMapping()
-	public ResponseEntity<?> createPurchase(@RequestParam(name="serv_id") Long serv_id) {
+	public ResponseEntity<?> createPurchase(@RequestParam(name="serv_id") Long serv_id) throws ResourceNotFoundException {
 		
 		Purchase completed = service.createPurchase(serv_id);
 		
@@ -60,21 +60,9 @@ public class PurchaseController {
 		
 	}
 	
-	
-	//Update an order
-//	@PutMapping()
-//	
-//		Optional<OrderItem> found = repo.findById(order_id);
-//		
-//		return null;	// finish
-//		
-//		
-//	}
-	
-	
 	//Delete an Order
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> deleteOrderById(@RequestParam Long pur_id) throws ResourceNotFoundException {
+	public ResponseEntity<?> deletePurchaseById(@RequestParam Long pur_id) throws ResourceNotFoundException {
 		
 		Optional<Purchase> opt = repo.findById(pur_id);
 		

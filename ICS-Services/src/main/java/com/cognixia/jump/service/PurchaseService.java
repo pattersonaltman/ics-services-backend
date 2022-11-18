@@ -1,5 +1,6 @@
 package com.cognixia.jump.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,18 @@ public class PurchaseService {
 			Optional<Services> service = servRepo.findById(serv_id);
 			if (service.isPresent()) {
 				Services currService = service.get();
+				
+				List<Purchase> purchases = repo.findAll();
+				if(!purchases.isEmpty()) {
+					for (int i=0; i < purchases.size() ;i++) {
+						if (purchases.get(i).getService().getType() == currService.getType()) {
+							if (purchases.get(i).getUser() == currUser) {
+								repo.delete(purchases.get(i));
+							}
+						}
+					}
+				}
+				
 				Purchase currPurchase = new Purchase(1L, currUser, currService, currOrder);
 				repo.save(currPurchase);
 				int newQty = currOrder.getQty()+1;
@@ -63,6 +76,7 @@ public class PurchaseService {
 				double newTotal = currOrder.getTotal() + currService.getPrice();
 				orderService.updateOrderById(currOrder.getOrder_id(), newQty, newDiscount, newTotal);
 				return currPurchase;
+			
 			} else {
 				throw new ResourceNotFoundException("service", serv_id);
 			}

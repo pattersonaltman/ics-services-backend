@@ -27,16 +27,8 @@ import com.cognixia.jump.repository.UserRepository;
 @RequestMapping("api/orders")
 public class OrderController {
 
-	
-	
-	
 	@Autowired
 	OrderRepository repo;
-	
-	
-	
-	
-	
 	
 	//Get all orders
 	@GetMapping()

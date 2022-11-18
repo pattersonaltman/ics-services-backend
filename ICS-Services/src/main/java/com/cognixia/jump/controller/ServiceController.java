@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Services;
+import com.cognixia.jump.model.Services.Type;
 import com.cognixia.jump.repository.ServiceRepository;
 
 @RestController
@@ -52,6 +53,14 @@ public class ServiceController {
 		
 		throw new ResourceNotFoundException("Service", serv_id);
 	}
+	
+	
+	
+	@GetMapping("/type")
+	public List<Services> getServiceByType(@RequestParam(name = "type") Type t) {
+		return repo.findAllByType(t);
+	}
+	
 	
 	
 	

@@ -77,5 +77,20 @@ public class PurchaseController {
 		
 		throw new ResourceNotFoundException("Purchase", pur_id);
 	}
+	
+	
+	//Delete all Orders
+	@DeleteMapping("/delete/all")
+	public ResponseEntity<?> deleteAllPurchases() throws ResourceNotFoundException {
+		
+		if(repo.count() > 0)
+		{
+			long count = repo.count();
+			repo.deleteAll();
+			return ResponseEntity.status(200).body("Deleted [" + count + "] purchases");
+		}
+		
+		throw new ResourceNotFoundException("No existing purchases");
+	}
 
 }

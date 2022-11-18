@@ -1,5 +1,6 @@
 package com.cognixia.jump.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ import com.cognixia.jump.model.Purchase;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.OrderRepository;
 import com.cognixia.jump.repository.PurchaseRepository;
+import com.cognixia.jump.repository.ServiceRepository;
 import com.cognixia.jump.repository.UserRepository;
 import com.cognixia.jump.service.PurchaseService;
 
@@ -38,6 +40,9 @@ public class OrderController {
 	
 	@Autowired
 	PurchaseService purchaseService;
+	
+	@Autowired
+	ServiceRepository servRepo;
 	
 	//Get all orders
 	@GetMapping()
@@ -61,13 +66,45 @@ public class OrderController {
 	
 	@PostMapping("/quote")
 	public ResponseEntity<?> getOrderQuote(@RequestBody Long[] ids) throws ResourceNotFoundException {
-		for (int i=0; i < ids.length; i++ ) {
-			Purchase purchase = purchaseService.createPurchase(ids[i]);
+		
+		double discount = ids.length * 0.1;
+		if(ids.length > 5)
+		{
+			discount = 0.5;
 		}
 		
-		return ResponseEntity.status(200).body(null);
+		OrderItem quote = new OrderItem(0L, null, ids.length, discount, 0, new HashSet<Purchase>());
+		
+		for (int i=0; i < ids.length; i++ ) {
+			Purchase purchase = purchaseService.createPurchaseQuote(ids[i]);
+			quote.getPurchases().add(purchase);
+			double price = servRepo.findById(ids[i]).get().getPrice();
+			quote.setTotal(quote.getTotal() + price);
+		}
+		
+		return ResponseEntity.status(200).body(quote);
 	}
 	
+	@PostMapping("/checkout")
+	public ResponseEntity<?> getOrderCheckout(@RequestBody Long[] ids) throws ResourceNotFoundException {
+		
+		User user = null;
+		
+		for (int i=0; i < ids.length; i++ ) {
+			Purchase purchase = purchaseService.createPurchase(ids[i]);
+			user = purchase.getUser();
+		}
+		
+		Optional<OrderItem> opt = repo.findByUser(user);
+		
+		if(opt.isPresent())
+		{
+			OrderItem checkout = opt.get();
+			return ResponseEntity.status(201).body(checkout);
+		}
+		
+		throw new ResourceNotFoundException("No user found: Checkout could not be completed");
+	}
 	
 	//Delete an Order
 	@DeleteMapping("/delete")

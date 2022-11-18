@@ -30,7 +30,7 @@ public class Purchase implements Serializable {
 	@JsonIgnoreProperties("purchases")
 	@ManyToOne
 	@JoinColumn(name = "serv_id")
-	Service service;
+	Services service;
 	
 	@JsonIgnoreProperties("purchases")
 	@ManyToOne
@@ -44,7 +44,7 @@ public class Purchase implements Serializable {
 
 
 
-	public Purchase(Long id, User user, Service service, OrderItem orderItem) {
+	public Purchase(Long id, User user, Services service, OrderItem orderItem) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -75,12 +75,12 @@ public class Purchase implements Serializable {
 	}
 
 
-	public Service getService() {
+	public Services getService() {
 		return service;
 	}
 
 
-	public void setService(Service service) {
+	public void setService(Services service) {
 		this.service = service;
 	}
 

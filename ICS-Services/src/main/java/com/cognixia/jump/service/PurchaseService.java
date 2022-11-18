@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.OrderItem;
 import com.cognixia.jump.model.Purchase;
+
+import com.cognixia.jump.model.Services;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.OrderRepository;
 import com.cognixia.jump.repository.PurchaseRepository;
+import com.cognixia.jump.repository.ServiceRepository;
 import com.cognixia.jump.repository.UserRepository;
 
 @Service
@@ -25,6 +28,9 @@ public class PurchaseService {
 	
 	@Autowired
 	PurchaseRepository repo;
+	
+	@Autowired
+	ServiceRepository servRepo;
 	
 	@Autowired
 	OrderRepository orderRepo;
@@ -41,14 +47,27 @@ public class PurchaseService {
 			Optional<OrderItem> orderItem = orderRepo.findByUser(currUser);
 			if (!orderItem.isPresent()) {
 				orderService.createOrder(username);
-				Optional<OrderItem> orderItem = orderRepo.findById(user.get().getId());
+				orderItem = orderRepo.findByUser(currUser);
 			}
-		
-			
+			OrderItem currOrder = orderItem.get();
+			Optional<Services> service = servRepo.findById(serv_id);
+			if (service.isPresent()) {
+				Services currService = service.get();
+				Purchase currPurchase = new Purchase(1L, currUser, currService, currOrder);
+				repo.save(currPurchase);
+				int newQty = currOrder.getQty()+1;
+				double newDiscount = 0.1*newQty;
+				if (newDiscount > 0.5) {
+					newDiscount = 0.5;
+				}
+				double newTotal = currOrder.getTotal() + currService.getPrice();
+				orderService.updateOrderById(currOrder.getOrder_id(), newQty, newDiscount, newTotal);
+				return currPurchase;
+			} else {
+				throw new ResourceNotFoundException("service", serv_id);
+			}
 		} else {
 			throw new BadCredentialsException(username);
 		}
-		
 	}
-
 }

@@ -1,8 +1,11 @@
 package com.cognixia.jump.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,8 @@ import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.OrderItem;
 import com.cognixia.jump.model.Purchase;
+import com.cognixia.jump.model.Services;
+import com.cognixia.jump.model.Services.Type;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.OrderRepository;
 import com.cognixia.jump.repository.PurchaseRepository;
@@ -75,10 +80,64 @@ public class OrderController {
 		
 		OrderItem quote = new OrderItem(0L, null, ids.length, discount, 0, new HashSet<Purchase>());
 		
-		for (int i=0; i < ids.length; i++ ) {
-			Purchase purchase = purchaseService.createPurchaseQuote(ids[i]);
+		/* Parse @ids by Type and add into respective ArrayList */
+		List<Services> cable = new ArrayList<Services>();
+		List<Services> internet = new ArrayList<Services>();
+		Set<Services> streaming = new HashSet<Services>();		// STREAMING as a Set -> allow multiple, but only 1 of each
+		
+		for(int i = 0; i < ids.length; i++)
+		{
+			Optional<Services> opt = servRepo.findById(ids[i]);
+			if(opt.isPresent())
+			{
+				Services service = opt.get();
+				
+				if(service.getType() == Type.CABLE)
+				{
+					cable.add(service);
+				}
+				if(service.getType() == Type.INTERNET)
+				{
+					internet.add(service);
+				}
+				if(service.getType() == Type.STREAMING)
+				{
+					streaming.add(service);
+				}
+			}
+		}
+		
+		Purchase purchase;
+		double price;
+		
+		/* Delete all CABLE elements in List except for last element; add last element as purchase choice and calculate total */
+		int cableSize = cable.size() - 1;
+		for(int i = 0; i < cableSize; i++)
+		{
+			cable.remove(0);
+		}
+		purchase = purchaseService.createPurchaseQuote(cable.get(0).getServ_id());
+		quote.getPurchases().add(purchase);
+		price = cable.get(0).getPrice();
+		quote.setTotal(quote.getTotal() + price);
+		
+		/* Delete all INTERNET elements in List except for last element; add last element as purchase choice and calculate total */
+		int internetSize = internet.size() - 1;
+		for(int i = 0; i < internetSize; i++)
+		{
+			internet.remove(0);
+		}
+		purchase = purchaseService.createPurchaseQuote(internet.get(0).getServ_id());
+		quote.getPurchases().add(purchase);
+		price = internet.get(0).getPrice();
+		quote.setTotal(quote.getTotal() + price);
+		
+		/* Add all STREAMING elements */
+		for(Services serv : streaming)
+		{
+			purchase = purchaseService.createPurchaseQuote(serv.getServ_id());
 			quote.getPurchases().add(purchase);
-			double price = servRepo.findById(ids[i]).get().getPrice();
+			price = serv.getPrice();
 			quote.setTotal(quote.getTotal() + price);
 		}
 		

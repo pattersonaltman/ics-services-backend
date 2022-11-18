@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cognixia.jump.exception.ResourceAlreadyExistsException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.OrderItem;
+import com.cognixia.jump.model.Purchase;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.OrderRepository;
+import com.cognixia.jump.repository.PurchaseRepository;
 import com.cognixia.jump.repository.UserRepository;
+import com.cognixia.jump.service.PurchaseService;
 
 @RestController
 @RequestMapping("api/orders")
@@ -29,6 +32,12 @@ public class OrderController {
 
 	@Autowired
 	OrderRepository repo;
+	
+	@Autowired
+	PurchaseRepository purchaseRepo;
+	
+	@Autowired
+	PurchaseService purchaseService;
 	
 	//Get all orders
 	@GetMapping()
@@ -50,7 +59,14 @@ public class OrderController {
 		throw new ResourceNotFoundException("Order", order_id);
 	}
 	
-
+	@PostMapping("/quote")
+	public ResponseEntity<?> getOrderQuote(@RequestBody Long[] ids) throws ResourceNotFoundException {
+		for (int i=0; i < ids.length; i++ ) {
+			Purchase purchase = purchaseService.createPurchase(ids[i]);
+		}
+		
+		return ResponseEntity.status(200).body(null);
+	}
 	
 	
 	//Delete an Order

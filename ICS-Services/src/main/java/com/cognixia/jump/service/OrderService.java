@@ -50,7 +50,7 @@ public class OrderService {
 	
 	//Update an order
 	//No mapping needed [?]
-	public ResponseEntity<?> updateOrderById(Long order_id, int qty, double discount, double total) throws ResourceNotFoundException {
+	public ResponseEntity<?> updateOrderById(Long order_id, int qty, double discount, double total, Purchase purchase) throws ResourceNotFoundException {
 		
 		Optional<OrderItem> opt = repo.findById(order_id);
 		
@@ -60,6 +60,7 @@ public class OrderService {
 			update.setQty(qty);
 			update.setDiscount(discount);
 			update.setTotal(total);
+			update.getPurchases().add(purchase);
 			update = repo.save(update);
 			
 			return ResponseEntity.status(200).body(update);

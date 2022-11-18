@@ -1,5 +1,6 @@
 package com.cognixia.jump.service;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.OrderItem;
+import com.cognixia.jump.model.Purchase;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.OrderRepository;
 import com.cognixia.jump.repository.UserRepository;
@@ -37,7 +39,7 @@ public class OrderService {
 		if(opt.isPresent())
 		{
 			User user = opt.get();
-			OrderItem newOrder = new OrderItem(0L, user, 0, 0, 0);
+			OrderItem newOrder = new OrderItem(null, user, 0, 0, 0, new HashSet<Purchase>());
 			repo.save(newOrder);
 			return ResponseEntity.status(201).body(newOrder);
 		}

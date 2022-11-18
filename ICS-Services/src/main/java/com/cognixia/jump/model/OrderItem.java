@@ -51,13 +51,14 @@ public class OrderItem implements Serializable{
 		
 	}
 
-	public OrderItem(Long order_id, User user, int qty, double discount, double total) {
+	public OrderItem(Long order_id, User user, int qty, double discount, double total, Set<Purchase> purchases) {
 		super();
 		this.order_id = order_id;
 		this.user = user;
 		this.qty = qty;
 		this.discount = discount;
 		this.total = total;
+		this.purchases = purchases;
 	}
 
 	public Long getOrder_id() {
@@ -100,11 +101,20 @@ public class OrderItem implements Serializable{
 		this.total = total;
 	}
 
+	public Set<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(Set<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderItem [order_id=" + order_id + ", user=" + user + ", qty=" + qty + ", discount=" + discount
-				+ ", total=" + total + "]";
+				+ ", total=" + total + ", purchases=" + purchases + "]";
 	}
-	
+
+
 
 }

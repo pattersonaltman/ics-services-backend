@@ -52,7 +52,7 @@ public class PurchaseController {
 	
 	//Create purchase
 	@PostMapping()
-	public ResponseEntity<?> createPurchase(@RequestParam(name="serv_id") Long serv_id) {
+	public ResponseEntity<?> createPurchase(@RequestParam(name="serv_id") Long serv_id) throws ResourceNotFoundException {
 		
 		Purchase completed = service.createPurchase(serv_id);
 		

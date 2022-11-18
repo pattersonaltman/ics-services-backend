@@ -99,4 +99,23 @@ public class PurchaseService {
 	}
 	
 	
+	/*
+	 * - will get param: User & Order
+	 * - changed thing to null
+	 */
+	public Purchase createPurchaseCheckout(Long serv_id, User user, OrderItem order) throws ResourceNotFoundException {
+		
+		Optional<Services> service = servRepo.findById(serv_id);
+		if (service.isPresent()) {
+			Services currService = service.get();
+			Purchase purchase = new Purchase(null, user, currService, order);
+			repo.save(purchase);
+			return purchase;
+		}
+		else {
+			throw new ResourceNotFoundException("Service", serv_id);
+		}
+	} 
+	
+	
 }
